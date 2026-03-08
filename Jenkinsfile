@@ -1,12 +1,12 @@
 pipeline {
     agent {
         docker {
-            image 'node:16-buster-slim' 
-            args '-p 3000:3000' 
+            image 'node:16-buster-slim'
+            args '-p 3000:3000'
         }
     }
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
                 sh 'npm install'
             }
@@ -16,13 +16,11 @@ pipeline {
                 sh './jenkins/scripts/test.sh'
             }
         }
-        stage('Deploy') {
+        stage('Deploy') { 
             steps {
-                sh 'chmod +x ./jenkins/scripts/deliver.sh'
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)'
-                sh 'chmod +x ./jenkins/scripts/kill.sh'
-                sh './jenkins/scripts/kill.sh'
+                sh './jenkins/scripts/deliver.sh' 
+                input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)' 
+                sh './jenkins/scripts/kill.sh' 
             }
         }
     }
